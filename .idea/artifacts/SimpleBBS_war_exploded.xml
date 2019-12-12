@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="SimpleBBS:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/SimpleBBS_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="SimpleBBS/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="SimpleBBS" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Spring-4.3.18.RELEASE" />
+          <element id="library" level="project" name="Spring MVC-4.3.18.RELEASE" />
+          <element id="library" level="project" name="ant-1.9.6" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
