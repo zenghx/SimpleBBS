@@ -1,10 +1,30 @@
 package com.simplebbs.po;
 
+import java.util.Date;
+
 public class Report {
+    private long record_id;
     private long post_id;
     private long comment_id;
     private int reporter;
     private String report_reason;
+    private Date report_time;
+
+    public void setRecord_id(long record_id) {
+        this.record_id = record_id;
+    }
+
+    public long getRecord_id() {
+        return record_id;
+    }
+
+    public Date getReport_time() {
+        return report_time;
+    }
+
+    public void setReport_time(Date report_time) {
+        this.report_time = report_time;
+    }
 
     public void setComment_id(long comment_id) {
         this.comment_id = comment_id;
