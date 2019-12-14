@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="simplebbs@u.zenghx.tk" uuid="655a2e12-ac56-4595-bcff-7504fa8de8d9">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://u.zenghx.tk:3306/simplebbs</jdbc-url>
+    </data-source>
+  </component>
+</project>

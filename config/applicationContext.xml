@@ -38,7 +38,7 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>	
     <!-- 开启事务注解 -->
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven/>
     <!-- 配置MyBatis工厂SqlSessionFactory -->
     <bean id="sqlSessionFactory" 
                            class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -49,7 +49,7 @@
     </bean>
     <!-- 配置mapper扫描器 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.itheima.dao"/>
+		<property name="basePackage" value="com.simplebbs.dao"/>
 	</bean>
     <!-- 扫描Service --> 
     <context:component-scan base-package="com.simplebbs.service" />

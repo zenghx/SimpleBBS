@@ -29,5 +29,8 @@
     <orderEntry type="library" name="Spring-4.3.18.RELEASE" level="project" />
     <orderEntry type="library" name="Spring MVC-4.3.18.RELEASE" level="project" />
     <orderEntry type="library" name="ant-1.9.6" level="project" />
+    <orderEntry type="library" name="enc-base64" level="application" />
+    <orderEntry type="library" name="hmac-sha256" level="application" />
+    <orderEntry type="library" name="core" level="application" />
   </component>
 </module>
