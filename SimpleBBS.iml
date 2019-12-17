@@ -34,5 +34,6 @@
     <orderEntry type="library" name="core" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="crypto-js" level="application" />
+    <orderEntry type="library" name="wangEditor" level="application" />
   </component>
 </module>
