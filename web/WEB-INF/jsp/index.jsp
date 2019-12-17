@@ -11,7 +11,7 @@
     <title>主页</title>
   </head>
   <body>
-  当前用户：${USER_SESSION.username}
+  当前用户：${USER_SESSION.user_name}
   <a href="${pageContext.request.contextPath}/sign_out">退出</a>
   </body>
 </html>

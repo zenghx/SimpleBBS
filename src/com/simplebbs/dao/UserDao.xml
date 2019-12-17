@@ -6,13 +6,13 @@
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
     <!-- 查询用户和密码进行登录 -->
     <select id="findUserByName" resultType="UserInfo" parameterType="String">
-        select * from user where username = #{username}
+        select * from user_info where user_name = #{username}
     </select>
 
     <!--增加用户名和密码进行注册  -->
     <insert id="addUser">
-         insert into user (username,pwd_hash)
-        values (#{username},#{pwd_hash})
+         insert into user_info (user_name,pwd_hash)
+        values (#{username},#{password})
     </insert>
 
 </mapper>

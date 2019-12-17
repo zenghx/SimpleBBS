@@ -32,5 +32,7 @@
     <orderEntry type="library" name="enc-base64" level="application" />
     <orderEntry type="library" name="hmac-sha256" level="application" />
     <orderEntry type="library" name="core" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="crypto-js" level="application" />
   </component>
 </module>

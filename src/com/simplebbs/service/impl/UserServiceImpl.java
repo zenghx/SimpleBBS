@@ -28,4 +28,9 @@ public class UserServiceImpl implements UserService {
             return user;
         else return null;
     }
+
+    @Override
+    public UserInfo findUserByName(String username) {
+        return userDao.findUserByName(username);
+    }
 }
