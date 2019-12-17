@@ -3,12 +3,12 @@ package com.simplebbs.po;
 import java.sql.Date;
 
 public class UserInfo {
-    private int user_id;
-    private String pwd_hash;
-    private String user_name;
-    private String avatar_url;
-    private int gender;
-    private Date birthday;
+    private int user_id;   //用户ID
+    private String pwd_hash;     //用户密码
+    private String user_name;    //用户名
+    private String avatar_url;    //用户头像
+    private int gender;        //用户性别
+    private Date birthday;        //用户生日
 
     public Date getBirthday() {
         return birthday;
