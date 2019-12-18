@@ -63,6 +63,8 @@
             <button type="button" class="btn btn-danger">
               <span class="glyphicon glyphicon-edit"></span>注册
             </button>
+
+
           </div>
         </div>
       </div>
