@@ -18,7 +18,7 @@
 </div>
 
 <div id="信息" class="tabcontent">
-    <h3>London</h3>
+    <h3>个人信息</h3>
     <p>个人信息</p>
 </div>
 

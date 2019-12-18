@@ -27,7 +27,7 @@
   <!-- 入门-->
   <!-- 登录界面 -->
   <div class="page-header">
-    <h1>用户登录</h1>&nbsp; <font color="red">${error_message}</font>
+    <h1>用户登录</h1>&nbsp; <span style="color: red; ">${error_message}</span>
   </div>
   <form class="form-horizontal" method="post"
         action="${pageContext.request.contextPath}/user/userLogin.do">
