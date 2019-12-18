@@ -6,6 +6,7 @@ import java.util.Date;
 public class Posts {
     private long post_id;
     private int author;
+    private String title;
     private String content;
     private boolean allow_comment;
     private int likes;
@@ -75,5 +76,13 @@ public class Posts {
 
     public void setSection(String section) {
         this.section = section;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

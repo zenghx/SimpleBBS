@@ -28,7 +28,7 @@
                 dataType:"json",
                 success:function (data) {
                     if(data==false)
-                        alert("用户名已被占用");
+                        $("#usrnamemsg").text("用户名已被占用！")
                     else {
                         alert("注册成功");
                         window.location.href="${pageContext.request.contextPath}/sign_in"
@@ -43,7 +43,8 @@
 </head>
 <body>
 <form>
-    用户名：<input type="text" id="username" name="username"/><br/>
+    用户名：<input type="text" id="username" name="username"/>
+    <span style="color: red; "> <span id="usrnamemsg"></span></span> <br/>
     密&nbsp;&nbsp;&nbsp;码：<input type="password" id="password" name="password"/>
     <input type="button" value="注册" onclick="sub()"/>
 </form>

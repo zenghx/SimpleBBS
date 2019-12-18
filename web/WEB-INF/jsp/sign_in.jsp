@@ -18,6 +18,10 @@
         function hashpwd(){
             let usrname=document.getElementById("username");
             let pwd=document.getElementById("password");
+            if(pwd.value==""||usrname.value==""){
+                $("#message").text("用户名或密码不能为空");
+                return false;
+            }
             let message=pwd.value+usrname.value;
             let hash=CryptoJS.HmacSHA256(message,"digest");
             pwd.value=CryptoJS.enc.Base64.stringify(hash);
@@ -26,7 +30,8 @@
     </script>
 </head>
 <body>
-${msg}
+<span id="message">${msg}</span>
+
 <form action="${pageContext.request.contextPath}/sign_in" method="post" onsubmit="return hashpwd()">
     用户名：<input type="text" id="username" name="username"/><br/>
     密&nbsp;&nbsp;&nbsp;码：<input type="password" id="password" name="password"/>
