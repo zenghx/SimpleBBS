@@ -8,25 +8,16 @@
 <%@ page contentType="text/html;charset=UTF-8"  %>
 <html>
 <head>
-    <title>Title</title>
+    <title>发表新帖子</title>
     <link rel="stylesheet" type="text/css" href="https://zcdn.yce.ink/wangEditor.min.css"/>
 </head>
 <body>
 <input type="text" placeholder="请输入帖子标题" id="post_title"/>
-<div id="div1">
-    <p>请输入内容...</p>
-</div>
+<jsp:include page="editor.jsp"></jsp:include>
 <select>
 
 </select>
 <button type="button" onclick="return submit()" >提交</button>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://zcdn.yce.ink/wangEditor.min.js"></script>
-<script>
-    const E = window.wangEditor;
-    const editor = new E('#div1');
-    editor.create()
-</script>
 <script>
     function submit() {
         let author=6;
@@ -35,12 +26,18 @@
         $.ajax({
             url:"${pageContext.request.contextPath}/new_post",
             type:"post",
-            async:false,
             data:JSON.stringify({author:author,title:tt,content:editor.txt.html(),section_id:section}),
             contentType:"application/json;charset=UTF-8",
             dataType:"json",
             success:function (data) {
-                console.log(data.status);
+                if(data.status=="succeed"){
+                    alert("发帖成功");
+                    window.location.href="${pageContext.request.contextPath}/post/"+data.post_id;
+                }
+                else alert("发帖失败，请稍后重试");
+            },
+            error:function () {
+                console.log("error");
             }
         })
     }

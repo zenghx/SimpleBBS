@@ -23,14 +23,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfo login(String username, String password) {
-        UserInfo user=userDao.findUserByName(username);
+        if (username!=null&&!username.isBlank()){
+            UserInfo user=userDao.findUserByName(username);
         if(user!=null&& user.getPwd_hash().equals(password))
             return user;
+        else return null;
+        }
         else return null;
     }
 
     @Override
     public UserInfo findUserByName(String username) {
-        return userDao.findUserByName(username);
+        if(username!=null&&!username.isBlank())
+            return userDao.findUserByName(username);
+        else return null;
+    }
+
+    @Override
+    public UserInfo findUserById(int id) {
+        if(id>0)
+            return userDao.findUserById(id);
+        else return null;
     }
 }

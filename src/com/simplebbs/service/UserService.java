@@ -6,4 +6,5 @@ public interface UserService {
     void addUser(UserInfo user);
     UserInfo login(String username,String password);
     UserInfo findUserByName(String username);
+    UserInfo findUserById(int id);
 }

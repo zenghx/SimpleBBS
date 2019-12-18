@@ -12,7 +12,7 @@ public class Posts {
     private int likes;
     private int dislikes;
     private Date post_time;
-    private Integer section_id;
+    private int section_id;
 
     public boolean isAllow_comment() {
         return allow_comment;
@@ -46,10 +46,6 @@ public class Posts {
         return content;
     }
 
-    public Integer getSection() {
-        return section_id;
-    }
-
     public void setAllow_comment(boolean allow_comment) {
         this.allow_comment = allow_comment;
     }
@@ -74,15 +70,19 @@ public class Posts {
         this.post_time = post_time;
     }
 
-    public void setSection(Integer section) {
-        this.section_id = section;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public Integer getSection_id() {
+        return section_id;
+    }
+
+    public void setSection_id(Integer section_id) {
+        this.section_id = section_id;
     }
 }

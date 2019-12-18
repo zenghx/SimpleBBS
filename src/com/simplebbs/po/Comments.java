@@ -6,7 +6,7 @@ public class Comments {
     private long comment_id;
     private long post_id;
     private int user_id;
-    private String comment;
+    private String content;
     private int likes;
     private int dislikes;
     private Date comment_time;
@@ -55,15 +55,15 @@ public class Comments {
         return comment_time;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public void setComment_time(Date comment_time) {
         this.comment_time = comment_time;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getContent() {
+        return content;
     }
 }

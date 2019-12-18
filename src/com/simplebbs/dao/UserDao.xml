@@ -8,7 +8,10 @@
     <select id="findUserByName" resultType="UserInfo" parameterType="String">
         select * from user_info where user_name = #{username}
     </select>
-
+    <!-- 查询用户和密码进行登录 -->
+    <select id="findUserById" resultType="UserInfo" parameterType="Integer">
+        select * from user_info where user_id = #{id}
+    </select>
     <!--增加用户名和密码进行注册  -->
     <insert id="addUser">
          insert into user_info (user_name,pwd_hash)
