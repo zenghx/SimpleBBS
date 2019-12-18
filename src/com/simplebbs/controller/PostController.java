@@ -46,6 +46,7 @@ public class PostController {
     public String toNewPost(){
         return "new_post";
     }
+
     @RequestMapping(value = "/new_post",method = RequestMethod.POST)
     @ResponseBody
     public String newPost(@RequestBody Posts newPost){
