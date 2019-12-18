@@ -28,4 +28,9 @@ public class UserServiceImpl implements UserService {          //UserServiced的
             return user;
         else return null;
     }
+
+    @Override
+    public UserInfo findUserByName(String username) {
+        return userDao.findUserByName(username);
+    }
 }

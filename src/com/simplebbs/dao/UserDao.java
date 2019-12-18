@@ -4,7 +4,7 @@ import com.simplebbs.po.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserDao {
-    void addUser(@Param("username")String username,@Param("addUser")String password);       //添加用户
-    UserInfo findUserByName(@Param("username")String username);        //查询用户
+    void addUser(@Param("username") String username,@Param("password") String password);
+    UserInfo findUserByName(String username);
 
 }

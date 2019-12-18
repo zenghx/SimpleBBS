@@ -22,6 +22,11 @@
       <root url="jar://$PROJECT_DIR$/lib/slf4j-log4j12-1.7.22.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jsp-api.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/servlet-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-databind-2.10.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-core-2.10.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-annotations-2.10.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/taglibs-standard-spec-1.2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/taglibs-standard-impl-1.2.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
