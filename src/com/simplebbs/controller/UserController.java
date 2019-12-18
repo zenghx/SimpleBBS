@@ -16,10 +16,12 @@ public class UserController {
     public void setUserService(UserService userService){
         this.userService=userService;
     }
+
     @RequestMapping(value="/sign_in",method = RequestMethod.GET)
     public String signIn(){
         return "sign_in";
     }
+
     @RequestMapping(value = "/sign_in",method = RequestMethod.POST)
     public String doSignIn(String username, String password, Model model, HttpSession session){
         UserInfo foundUser=userService.login(username,password);
@@ -30,10 +32,12 @@ public class UserController {
         model.addAttribute("msg","用户名或密码错误，请重新登录！");
         return "sign_in";
     }
+
     @RequestMapping(value = "/index")
     public String toIndex(){
         return "index";
     }
+
     @RequestMapping("/sign_out")
     public String logout(HttpSession session){
         session.invalidate();

@@ -23,6 +23,7 @@
             $.ajax({
                 url:"${pageContext.request.contextPath}/sign_up",
                 type:"post",
+                async:false,
                 data:JSON.stringify({user_name:usrname.value,pwd_hash:CryptoJS.enc.Base64.stringify(hash)}),
                 contentType:"application/json;charset=UTF-8",
                 dataType:"json",
