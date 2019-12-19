@@ -2,12 +2,14 @@ package com.simplebbs.service.impl;
 
 import com.simplebbs.dao.PostDao;
 import com.simplebbs.po.Posts;
+import com.simplebbs.po.Section;
 import com.simplebbs.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -60,5 +62,10 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public Integer setCommentStatus(long postId, boolean allowComment) {
         return postDao.setCommentStatus(postId,allowComment);
+    }
+
+    @Override
+    public List<Section> allSections() {
+        return postDao.showAllSections();
     }
 }
