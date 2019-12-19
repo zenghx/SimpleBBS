@@ -53,10 +53,10 @@ public class UserController {
     public String toSignUp(@RequestBody UserInfo user){
         UserInfo foundUser=userService.findUserByName(user.getUser_name());
         if(foundUser!=null)
-            return "false";
+            return "{\"result\":\"failed\"}";
         else {
             userService.addUser(user);
-            return "true";
+            return "{\"result\":\"succeed\"}";
         }
     }
 }

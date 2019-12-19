@@ -1,35 +1,44 @@
 package com.simplebbs.service.impl;
 
 import com.simplebbs.dao.CommentDao;
+import com.simplebbs.dao.UserDao;
 import com.simplebbs.po.Comments;
+import com.simplebbs.po.UserInfo;
 import com.simplebbs.service.CommentService;
+import com.simplebbs.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
     private CommentDao commentDao;
+    private UserDao userDao;
     @Autowired
     void setCommentDao(CommentDao commentDao){
         this.commentDao=commentDao;
     }
+    @Autowired
+    void setUserDao(UserDao userDao){this.userDao=userDao;}
 
 
     @Override
-    public Comments findCommentByPost(long postId) {
-        if (postId!=0)
-            return commentDao.findCommentByPost(postId);
+    public List<Comments> findCommentByPost(long postId,int start,int end) {
+        if (postId!=0){
+            return commentDao.findCommentByPost(postId,start,end);
+        }
         else return null;
     }
 
     @Override
-    public Comments findCommentByUser(String username) {
+    public List<Comments> findCommentByUser(String username,int start,int end) {
         if(username!=null)
-            return commentDao.findCommentByUser(username);
-        else return null;
+            return commentDao.findCommentByUser(username,start,end);
+        return null;
     }
+
 
     @Override
     public Integer newComment(int userId, long postId, String content, int likes,
@@ -48,6 +57,23 @@ public class CommentServiceImpl implements CommentService {
         comment.setDislikes(dislikes);
         comment.setComment_time(commentTime);
         return commentDao.newComment(comment);
+    }
+
+    @Override
+    public Integer getCommentsCountByPost(long postId) {
+        if(postId<=0)
+            return null;
+        else return commentDao.getCommentsCountByPost(postId);
+    }
+
+    @Override
+    public Integer getCommentsCountByUser(String username) {
+        if(username==null)
+            return null;
+        else {
+            UserInfo user=userDao.findUserByName(username);
+            return commentDao.getCommentsCountByUser(user.getUser_id());
+        }
     }
 
 

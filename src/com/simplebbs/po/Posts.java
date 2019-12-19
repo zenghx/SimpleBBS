@@ -1,7 +1,10 @@
 package com.simplebbs.po;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
+import java.util.List;
 
 public class Posts {
     private long post_id;
@@ -13,11 +16,20 @@ public class Posts {
     private int dislikes;
     private Date post_time;
     private int section_id;
+    private List<Comments> commentsList;
+
+    public int getSection_id() {
+        return section_id;
+    }
+
+    public void setSection_id(int section_id) {
+        this.section_id = section_id;
+    }
 
     public boolean isAllow_comment() {
         return allow_comment;
     }
-
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss a")
     public Date getPost_time() {
         return post_time;
     }
@@ -78,11 +90,11 @@ public class Posts {
         return title;
     }
 
-    public Integer getSection_id() {
-        return section_id;
+    public List<Comments> getCommentsList() {
+        return commentsList;
     }
 
-    public void setSection_id(Integer section_id) {
-        this.section_id = section_id;
+    public void setCommentsList(List<Comments> commentsList) {
+        this.commentsList = commentsList;
     }
 }

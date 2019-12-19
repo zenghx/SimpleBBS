@@ -1,8 +1,10 @@
 package com.simplebbs.service;
 
 import com.simplebbs.po.Posts;
+import com.simplebbs.po.Section;
 
 import java.util.Date;
+import java.util.List;
 
 public interface PostService {
     Posts galancePostById(long postId);
@@ -12,4 +14,5 @@ public interface PostService {
                 int section_id,int dislikes);
     Integer delPost(long postId);
     Integer setCommentStatus(long postId,boolean allowComment);
+    List<Section> allSections();
 }

@@ -5,17 +5,28 @@
 <mapper namespace="com.simplebbs.dao.CommentDao">
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
     <!-- 根据帖子ID查找评论 -->
-    <select id="findCommentByPost" resultType="Comments" parameterType="Integer">
+    <select id="findCommentByPost" resultType="Comments">
         select * from comments where post_id=#{post_id}
+        order by comment_id asc
+        limit #{start},#{end}
     </select>
 
     <!--根据用户查找评论  -->
-    <select id="findCommentByUser" resultType="Comments" parameterType="String">
+    <select id="findCommentByUser" resultType="Comments">
         select c.* from comments c,user_info u where c.user_id=u.user_id and u.user_name=#{username}
+        order by comment_id asc
+        limit #{start},#{end}
     </select>
     <!--添加新评论-->
     <insert id="newComment" useGeneratedKeys="true" keyProperty="comment_id">
         insert into comments(post_id, user_id, content, likes, dislikes, comment_time)
         VALUES(#{post_id},#{user_id},#{content},#{likes},#{dislikes},#{comment_time})
     </insert>
+
+    <select id="getCommentsCountByPost" resultType="Integer" parameterType="Long">
+        select COUNT(*) from comments where post_id=#{postId}
+    </select>
+    <select id="getCommentsCountByUser" parameterType="String" resultType="Integer">
+        select COUNT(*) from comments where user_id=#{userId}
+    </select>
 </mapper>

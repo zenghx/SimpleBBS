@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="006b3095-f1a1-456e-a36d-07d2779ebeea" name="u.zenghx.tk" url="https://tomcat.zenghx.tk">
+        <fileTransfer host="u.zenghx.tk" port="22022" rootFolder="/root" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions controlEncoding="UTF-8" dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22022" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

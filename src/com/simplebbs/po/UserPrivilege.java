@@ -6,9 +6,6 @@ public class UserPrivilege {
     private boolean able_comment;
     private boolean admin;
 
-    public UserPrivilege() {
-    }
-
     public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
