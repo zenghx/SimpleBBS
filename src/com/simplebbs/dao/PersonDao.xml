@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.simplebbs.dao.PersonDao">
+    <!-- 目的：为DAO接口方法提供sql语句配置 -->
+    <!-- 根据用户ID寻找用户信息 -->
+    <select id="FindUserInfobyid" resultType="UserInfo" parameterType="int">
+        select * from user_info where user_id = #{user_id}
+    </select>
+    <!-- 根据用户ID查找用户所发的帖子 -->
+    <select id="FindUserPosts" resultType="Posts" parameterType="int">
+        select * from posts where user_id = #{user_id}
+    </select>
+    <!-- 根据用户ID查找用户的评论 -->
+    <select id="FindUserComment" resultType="Comments" parameterType="int">
+        select * from comments where user_id = #{user_id}
+    </select>
+</mapper>

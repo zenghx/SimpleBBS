@@ -1,8 +1,7 @@
 package com.simplebbs.controller;
 
-import com.simplebbs.po.Posts;
 import com.simplebbs.po.UserInfo;
-import com.simplebbs.po.Comments;
+import com.simplebbs.po.Posts;
 import com.simplebbs.service.PostService;
 import com.simplebbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
