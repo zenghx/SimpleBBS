@@ -2,13 +2,13 @@ package com.simplebbs.dao;
 
 import com.simplebbs.po.Posts;
 import com.simplebbs.po.Section;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface PostDao {
-    Posts galancePostById(long postId);
+    List<Posts> glancePost(@Param("sectionId") int sectionId,@Param("userId") long userId,
+                                 @Param("start") int start,@Param("end") int end);//帖子概览
     Posts readPostById(long postId);
     Integer newPost(Posts post);
     Integer delPost(long postId);

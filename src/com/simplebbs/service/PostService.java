@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface PostService {
-    Posts galancePostById(long postId);
+    List<Posts> glancePost(int sectionId,long userId,int page,int pageSize);
     Posts readPostById(long postId);
     long newPost(int author, String content, String title,
                 boolean allowComment, Date postTime,int likes,

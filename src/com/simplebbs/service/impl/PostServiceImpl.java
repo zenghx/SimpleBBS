@@ -16,10 +16,15 @@ public class PostServiceImpl implements PostService {
     private PostDao postDao;
     @Autowired
     void setPostDao(PostDao postDao){this.postDao=postDao;}
+
+
     @Override
-    public Posts galancePostById(long postId) {
-        return postDao.galancePostById(postId);
+    public List<Posts> glancePost(int sectionId,long userId, int page, int pageSize) {
+        if(userId<=0)
+            return null;
+        else return postDao.glancePost(sectionId,userId,(page-1)*pageSize,page*pageSize);
     }
+
 
     @Override
     public Posts readPostById(long postId) {
