@@ -9,6 +9,6 @@
 <h3 >${title}</h3>
 <span name="content">${content}</span><br/>
 ${postTime}<br/>
-${username}<br/>
+${postUser.user_name}<br/>
 <img src="${avatar}" name="avatar" >
 

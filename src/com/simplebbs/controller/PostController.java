@@ -42,9 +42,8 @@ public class PostController {
             model.addAttribute("title",post.getTitle());
             model.addAttribute("content",post.getContent());
             model.addAttribute("postTime",format1.format(post.getPost_time()));
-            model.addAttribute("username",postUser.getUser_name());
+            model.addAttribute("postUser",postUser);
             model.addAttribute("avatar",postUser.getAvatar_url());
-
             return "page/post";
         }
         else return "page/404";
