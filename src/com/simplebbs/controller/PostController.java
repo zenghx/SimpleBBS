@@ -1,9 +1,12 @@
 package com.simplebbs.controller;
 
-import com.simplebbs.po.Comments;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simplebbs.po.Posts;
+import com.simplebbs.po.Section;
 import com.simplebbs.po.UserInfo;
-import com.simplebbs.service.CommentService;
 import com.simplebbs.service.PostService;
 import com.simplebbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +33,7 @@ public class PostController {
     }
 
     @RequestMapping("/post/{id}")
-    public String post(@PathVariable("id") long postID, Model model){
+    public String readPost(@PathVariable("id") long postID, Model model){
         Posts post=postService.readPostById(postID);
         if(post!=null){
             int uid=post.getAuthor();
@@ -42,16 +45,16 @@ public class PostController {
             model.addAttribute("username",postUser.getUser_name());
             model.addAttribute("avatar",postUser.getAvatar_url());
 
-            return "post";
+            return "page/post";
         }
-        else return "404";
+        else return "page/404";
     }
 
     @RequestMapping(value = "/new_post",method = RequestMethod.GET)
     public String toNewPost(Model model){
         List allSections=postService.allSections();
         model.addAttribute("allSections",allSections);
-        return "new_post";
+        return "page/new_post";
     }
 
     @RequestMapping(value = "/new_post",method = RequestMethod.POST)
@@ -59,7 +62,7 @@ public class PostController {
     public String newPost(@RequestBody Posts newPost, HttpSession session){
         UserInfo user=(UserInfo)session.getAttribute("USER_SESSION");
         if(user==null)
-            return "{\"status\":\"please sign in first\"}";
+            return "{\"status\":401,\"msg\":\"please sign in first\"}";
         else newPost.setAuthor(user.getUser_id());
         newPost.setLikes(0);
         newPost.setDislikes(0);
@@ -69,8 +72,72 @@ public class PostController {
                 newPost.isAllow_comment(),newPost.getPost_time(),newPost.getLikes(),
                 newPost.getSection_id(),newPost.getDislikes());
         if(result>0)
-            return "{\"post_id\":"+result+",\"status\":\"succeed\"}";
-        else return "{\"status\":\"fail\"}";
+            return "{\"post_id\":"+result+",\"status\":200}";
+        else return "{\"status\":404,\"msg\":\"fail\"}";
     }
 
+    @RequestMapping(value = "/glance_post",method = RequestMethod.GET,produces = "text/json;charset=UTF-8")
+    @ResponseBody
+    public Object glancePost(@RequestBody String request){
+        ObjectMapper mapper=new ObjectMapper();
+        JsonNode node= null;
+        try {
+            node = mapper.readTree(request);
+            String type=node.path("type").asText();
+            int page=node.path("page").asInt();
+            int pageSize=node.path("page_size").asInt();
+            int sectionId;
+            int userId;
+            if(type.equals("index")){
+                sectionId=0;
+                userId=0;
+            }
+            else if (type.equals("user")){
+                String username= node.path("value").asText();
+                userId=userService.findUserByName(username).getUser_id();
+                sectionId=0;
+            }
+            else if(type.equals("section")){
+                sectionId=node.path("value").asInt();
+                userId=0;
+            }
+            else return "{\"status\":404,\"msg\":\"not found\"}";
+            List<Posts> result=postService.glancePost(sectionId,userId,page,pageSize);
+            int postCount=postService.getPostCount(sectionId,userId);
+            if(result!=null&&postCount!=0)
+                return "{\"status\":200,\"posts\":"+mapper.writeValueAsString(result)+",\"count\":"+postCount+"}";
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "{\"status\":404,\"msg\":\"not found\"}";
+
+    }
+
+    @RequestMapping(value = "/get_section_name",method=RequestMethod.GET,produces = "text/json;charset=UTF8")
+    @ResponseBody
+    public String getSectionName(@RequestBody String request){
+        ObjectMapper mapper=new ObjectMapper();
+        JsonNode node;
+        try {
+            node=mapper.readTree(request);
+            int sectionId=node.path("section_id").asInt();
+            Section section=postService.findSectionById(sectionId);
+            if(section!=null)
+                return "{\"status\":200,\"section_name\":\""+section.getSection_name()+"\"}";
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "{\"status\":404,\"msg\":\"not found\"}";
+    }
+
+    @RequestMapping("/section/{id}")
+    public String showSection(@PathVariable("id")int sectionId,HttpSession session,Model model){
+        Section section=postService.findSectionById(sectionId);
+        UserInfo user=(UserInfo) session.getAttribute("USER_SESSION");
+        boolean isSignedIn=(user!=null);
+        model.addAttribute("SectionName",section.getSection_name());
+        return "page/section";
+    }
 }

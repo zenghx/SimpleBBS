@@ -1,5 +1,7 @@
 package com.simplebbs.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Comments {
@@ -9,6 +11,7 @@ public class Comments {
     private String content;
     private int likes;
     private int dislikes;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss a",timezone = "GMT+8")
     private Date comment_time;
 
     public long getComment_id() {

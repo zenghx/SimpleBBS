@@ -14,6 +14,7 @@ public class Posts {
     private boolean allow_comment;
     private int likes;
     private int dislikes;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss a",timezone = "GMT+8")
     private Date post_time;
     private int section_id;
     private List<Comments> commentsList;
@@ -29,7 +30,7 @@ public class Posts {
     public boolean isAllow_comment() {
         return allow_comment;
     }
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss a")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss a",timezone = "GMT+8")
     public Date getPost_time() {
         return post_time;
     }

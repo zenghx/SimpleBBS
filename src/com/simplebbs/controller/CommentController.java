@@ -20,7 +20,7 @@ public class CommentController {
     @Autowired
     void setCommentService(CommentService commentService){this.commentService=commentService;}
 
-    @RequestMapping(value = "/comment",method = RequestMethod.POST,produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/comment",method = RequestMethod.GET,produces = "text/json;charset=UTF-8")
     @ResponseBody
     public Object getCommentById(@RequestBody String request){
         try {
@@ -35,22 +35,21 @@ public class CommentController {
             if(type.equals("post")) {
                 commentJson=mapper.writeValueAsString(
                         commentService.findCommentByPost(node.path("target").asLong(), start, end));
-                return "{\"comments\":"+commentJson+
+                return "{\"status\":200,\"comments\":"+commentJson+
                         ",\"count\":"+commentService.getCommentsCountByPost(node.path("target").asLong())+"}";
             }
             if (type.equals("user")) {
                 commentJson=mapper.writeValueAsString(
                         commentService.findCommentByUser(node.path("target").asText(), start, end));
-                return "{\"comments\":"+commentJson+
+                return "{\"status\":200,\"comments\":"+commentJson+
                         ",\"count\":"+commentService.getCommentsCountByPost(node.path("target").asLong())+"}";
             }
-            else return "{\"info\":\"error\"}";
         } catch (JsonMappingException e) {
             e.printStackTrace();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return null;
+        return "{\"status\":404,\"msg\":\"not found\"}";
     }
 
     @RequestMapping(value = "/new_comment",method = RequestMethod.POST)
@@ -58,11 +57,11 @@ public class CommentController {
     public Object newComment(@RequestBody Comments comment, HttpSession session){
         UserInfo user=(UserInfo) session.getAttribute("USER_SESSION");
         if(user==null)
-            return "please sign in";
+            return "{\"status\":401,\"please sign in\"}";
         int result=commentService.newComment(user.getUser_id(),comment.getPost_id(),comment.getContent(),
                 0,0,new Date());
         if(result>0)
-            return "{\"result\":\"succeed\"}";
-        else return "{\"result\":\"fail\"}";
+            return "{\"status\":200,\"msg\":\"succeed\"}";
+        else return "{\"status\":500,\"msg\":\"fail\"}";
     }
 }

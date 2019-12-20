@@ -12,10 +12,10 @@
     <link rel="stylesheet" type="text/css" href="https://zcdn.yce.ink/wangEditor.min.css"/>
 </head>
 <body>
-<jsp:include page="post_content.jsp"></jsp:include>
+<jsp:include page="../component/post_content.jsp"></jsp:include>
 <div id="comments"></div>
 <div id="page"></div>
-<jsp:include page="editor.jsp"></jsp:include>
+<jsp:include page="../component/editor.jsp"></jsp:include>
 <button type="button" onclick="return "/>
 <script>
     let page=1;
