@@ -1,5 +1,6 @@
 package com.simplebbs.controller;
 
+import com.fasterxml.jackson.core.json.UTF8JsonGenerator;
 import com.simplebbs.po.UserInfo;
 import com.simplebbs.po.UserPrivilege;
 import com.simplebbs.service.UserService;
@@ -69,10 +70,11 @@ public class UserController {
         if(user_id>0){
             user = userService.findUserById(user_id);
             user_pri = userService.FindUserPrivilege(user_id);
-            return user;
+            return "{\"status\":200,\"user_name\":\""+user.getUser_name()+"\""+user.getAvatar_url()+"\""
+                    +user.getBirthday()+"\""+user.getGender()+"\""+user_pri.isAble_comment()+"\""
+                    +user_pri.isAble_post()+"\""+user_pri.isAdmin()+"\"";
         }
         else
             return null;
-
     }
 }
