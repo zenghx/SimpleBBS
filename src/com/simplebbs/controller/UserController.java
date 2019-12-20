@@ -80,12 +80,12 @@ public class UserController {
                 String response= "{" +
                         "\"status\":200," +
                         "\"user_name\":\"" + user.getUser_name() + "\"," +
-                        "\"avatar_url\":" + user.getAvatar_url() + "\"," +
+                        "\"avatar_url\":\"" + user.getAvatar_url() + "\"," +
                         "\"birthday\":" + bd + "," +
-                        "\"gender\":\"" + user.getGender() + "\"," +
-                        "\"is_able_comment\":" + user_pri.isAble_comment() + "\"," +
-                        "\"is_able_post\":" + user_pri.isAble_post() + "\"," +
-                        "\"is_admin\":" + user_pri.isAdmin() + "\"" +
+                        "\"gender\":" + user.getGender() + "," +
+                        "\"is_able_comment\":" + user_pri.isAble_comment() + "," +
+                        "\"is_able_post\":" + user_pri.isAble_post() + "," +
+                        "\"is_admin\":" + user_pri.isAdmin() + "," +
                         "}";
                 return response;
             }
