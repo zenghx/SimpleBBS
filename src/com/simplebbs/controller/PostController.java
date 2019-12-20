@@ -72,7 +72,7 @@ public class PostController {
                 newPost.getSection_id(),newPost.getDislikes());
         if(result>0)
             return "{\"post_id\":"+result+",\"status\":200}";
-        else return "{\"status\":404,\"msg\":\"fail\"}";
+        else return "{\"status\":404,\"msg\":\"not found\"}";
     }
 
     @RequestMapping(value = "/glance_post",method = RequestMethod.GET,produces = "text/json;charset=UTF-8")

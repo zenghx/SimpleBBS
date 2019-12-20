@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 
 @Controller
 public class UserController {
@@ -64,17 +65,31 @@ public class UserController {
 
     @RequestMapping(value = "/user/{user_id}",method = RequestMethod.GET,produces ="text/json;charset=UTF-8" )
     @ResponseBody
-    public Object getUserinfo(@PathVariable("user_id")int user_id){
+    public Object getUserInfo(@PathVariable("user_id")int user_id){
         UserInfo user;
         UserPrivilege user_pri;
-        if(user_id>0){
+        if(user_id>0) {
             user = userService.findUserById(user_id);
             user_pri = userService.FindUserPrivilege(user_id);
-            return "{\"status\":200,\"user_name\":\""+user.getUser_name()+"\""+user.getAvatar_url()+"\""
-                    +user.getBirthday()+"\""+user.getGender()+"\""+user_pri.isAble_comment()+"\""
-                    +user_pri.isAble_post()+"\""+user_pri.isAdmin()+"\"";
+            if (user != null && user_pri != null) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+                String bd;
+                if(user.getBirthday()!=null)
+                    bd=sdf.format(user.getBirthday());
+                else bd="";
+                String response= "{" +
+                        "\"status\":200," +
+                        "\"user_name\":\"" + user.getUser_name() + "\"," +
+                        "\"avatar_url\":" + user.getAvatar_url() + "\"," +
+                        "\"birthday\":" + bd + "," +
+                        "\"gender\":\"" + user.getGender() + "\"," +
+                        "\"is_able_comment\":" + user_pri.isAble_comment() + "\"," +
+                        "\"is_able_post\":" + user_pri.isAble_post() + "\"," +
+                        "\"is_admin\":" + user_pri.isAdmin() + "\"" +
+                        "}";
+                return response;
+            }
         }
-        else
-            return null;
+        return "{\"status\":404,\"msg\":\"not found\"}";
     }
 }
