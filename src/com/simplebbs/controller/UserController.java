@@ -1,6 +1,7 @@
 package com.simplebbs.controller;
 
 import com.simplebbs.po.UserInfo;
+import com.simplebbs.po.UserPrivilege;
 import com.simplebbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,10 +60,19 @@ public class UserController {
             return "{\"result\":\"succeed\"}";
         }
     }
-    @RequestMapping(value = "/user",method = "",produces = )
+
+    @RequestMapping(value = "/user/{user_id}",method = RequestMethod.GET,produces ="text/json;charset=UTF-8" )
     @ResponseBody
-    public Object getUserinfo(@RequestBody String request,HttpSession session){
-        UserInfo currentUsr=(UserInfo)session.getAttribute("USER_SESSION");
+    public Object getUserinfo(@PathVariable("user_id")int user_id){
+        UserInfo user;
+        UserPrivilege user_pri;
+        if(user_id>0){
+            user = userService.findUserById(user_id);
+            user_pri = userService.FindUserPrivilege(user_id);
+            return user;
+        }
+        else
+            return null;
 
     }
 }
