@@ -112,22 +112,14 @@ public class PostController {
 
     }
 
-    @RequestMapping(value = "/get_section_name",method=RequestMethod.GET,produces = "text/json;charset=UTF8")
+    @RequestMapping(value = "/get_section_name/{id}",method=RequestMethod.GET,produces = "text/json;charset=UTF8")
     @ResponseBody
-    public String getSectionName(@RequestBody String request){
-        ObjectMapper mapper=new ObjectMapper();
-        JsonNode node;
-        try {
-            node=mapper.readTree(request);
-            int sectionId=node.path("section_id").asInt();
-            Section section=postService.findSectionById(sectionId);
-            if(section!=null)
-                return "{\"status\":200,\"section_name\":\""+section.getSection_name()+"\"}";
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    public String getSectionName(@PathVariable("id") int sectionId){
+        if(sectionId<=0)
+            return "{\"status\":400,\"msg\":\"illegal parameter\"}";
+        Section section=postService.findSectionById(sectionId);
+        if(section!=null)
+            return "{\"status\":200,\"section_name\":\""+section.getSection_name()+"\"}";
         return "{\"status\":404,\"msg\":\"not found\"}";
     }
 
