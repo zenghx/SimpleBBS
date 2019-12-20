@@ -59,4 +59,10 @@ public class UserController {
             return "{\"result\":\"succeed\"}";
         }
     }
+    @RequestMapping(value = "/user",method = "",produces = )
+    @ResponseBody
+    public Object getUserinfo(@RequestBody String request,HttpSession session){
+        UserInfo currentUsr=(UserInfo)session.getAttribute("USER_SESSION");
+
+    }
 }
