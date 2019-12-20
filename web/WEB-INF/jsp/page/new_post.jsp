@@ -14,7 +14,7 @@
 </head>
 <body>
 <input type="text" placeholder="请输入帖子标题" id="post_title" maxlength="70" onchange="maxlength()"/><span id="ttmessage"></span>
-<jsp:include page="editor.jsp"></jsp:include>
+<jsp:include page="../component/editor.jsp"></jsp:include>
 <select id="select_section" name="select_section">
 <option value="">请选择板块...</option>
 <c:forEach items="${allSections}" var="item">

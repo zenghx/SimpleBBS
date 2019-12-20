@@ -5,7 +5,6 @@ import com.simplebbs.dao.UserDao;
 import com.simplebbs.po.Comments;
 import com.simplebbs.po.UserInfo;
 import com.simplebbs.service.CommentService;
-import com.simplebbs.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

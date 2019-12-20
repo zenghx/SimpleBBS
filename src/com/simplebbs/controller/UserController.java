@@ -19,7 +19,7 @@ public class UserController {
 
     @RequestMapping(value="/sign_in",method = RequestMethod.GET)
     public String signIn(){
-        return "sign_in";
+        return "page/sign_in";
     }
 
     @RequestMapping(value = "/sign_in",method = RequestMethod.POST)
@@ -27,25 +27,25 @@ public class UserController {
         UserInfo foundUser=userService.login(username,password);
         if(foundUser!=null){
             session.setAttribute("USER_SESSION",foundUser);
-            return "redirect:index";
+            return "page/index";
         }
         model.addAttribute("msg","用户名或密码错误，请重新登录！");
-        return "sign_in";
+        return "page/sign_in";
     }
 
     @RequestMapping(value = "/index")
     public String toIndex(){
-        return "index";
+        return "page/index";
     }
 
     @RequestMapping("/sign_out")
     public String logout(HttpSession session){
         session.invalidate();
-        return "redirect:index";
+        return "page/index";
     }
     @RequestMapping(value = "/sign_up",method = RequestMethod.GET)
     public String signUp(){
-        return "sign_up";
+        return "page/sign_up";
     }
 
     @RequestMapping(value = "/sign_up",method = RequestMethod.POST)

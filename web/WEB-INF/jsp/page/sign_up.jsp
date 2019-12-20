@@ -28,7 +28,7 @@
                 dataType:"json",
                 success:function (data) {
                     if(data==false)
-                        $("#usrnamemsg").text("用户名已被占用！")
+                        $("#usrnamemsg").text("用户名已被占用！");
                     else {
                         alert("注册成功");
                         window.location.href="${pageContext.request.contextPath}/sign_in"

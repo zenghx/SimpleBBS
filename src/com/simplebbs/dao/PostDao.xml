@@ -38,6 +38,18 @@
         select * from posts
         where post_id=#{postId}
     </select>
+
+    <select id="getPostCount" resultType="Integer">
+        select COUNT(*) from posts
+        <where>
+            <if test="sectionId!=0">
+                and section_id=#{sectionId}
+            </if>
+            <if test="userId!=0">
+                and author=#{userId}
+            </if>
+        </where>
+    </select>
     <!--发表新帖子-->
     <insert id="newPost" parameterType="Posts" useGeneratedKeys="true" keyProperty="post_id">
         insert into posts(author, content, allow_comment, likes, dislikes, post_time, section_id,title)
@@ -51,7 +63,12 @@
     <update id="setCommentStatus">
         update posts set allow_comment=#{allowComment} where post_id=#{postId}
     </update>
+    <!--查找分区列表-->
     <select id="showAllSections" resultType="Section">
         select * from section
+    </select>
+    <!--按号查找列表名-->
+    <select id="findSectionById" resultType="Section">
+        select * from section where section_id=#{setionId}
     </select>
 </mapper>
