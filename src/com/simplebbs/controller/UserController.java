@@ -56,10 +56,10 @@ public class UserController {
     public String toSignUp(@RequestBody UserInfo user){
         UserInfo foundUser=userService.findUserByName(user.getUser_name());
         if(foundUser!=null)
-            return "{\"result\":\"failed\"}";
+            return "{\"status\":400,\"msg\":\"failed\"}";
         else {
             userService.addUser(user);
-            return "{\"result\":\"succeed\"}";
+            return "{\"status\":200,\"msg\":\"succeed\"}";
         }
     }
 
