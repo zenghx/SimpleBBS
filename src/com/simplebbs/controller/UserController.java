@@ -92,4 +92,28 @@ public class UserController {
         }
         return "{\"status\":404,\"msg\":\"not found\"}";
     }
+
+    UserPrivilege current_priv;
+    @RequestMapping(value = "/admin",method = RequestMethod.GET,produces ="text/json;charset=UTF-8")
+    @ResponseBody
+    public void toUpdateUserPrivilege(@RequestBody UserPrivilege userpriv){
+        this.current_priv = userpriv;
+    }
+    public Object UpdateUserPrivilege(HttpSession session,Model model){
+        UserInfo current_user = (UserInfo) session.getAttribute("USER_SESSION");
+        UserPrivilege current_user_Privilege = userService.FindUserPrivilege(current_user.getUser_id());
+
+        if (current_user_Privilege.isAdmin() == true){
+            if(this.current_priv.getUser_id()!=0) {
+                userService.UpdateUserPrivilege(this.current_priv.getUser_id(), this.current_priv.isAble_post(),
+                        this.current_priv.isAble_comment(), this.current_priv.isAdmin());
+            }
+            else
+                return "{\"status\":404,\"msg\":\"not found\"}";
+        }
+        else
+            model.addAttribute("msg","您没有权限执行此操作！");
+        return "/admin";
+    }
 }
+
