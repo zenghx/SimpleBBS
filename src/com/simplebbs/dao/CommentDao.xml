@@ -26,7 +26,7 @@
     <select id="getCommentsCountByPost" resultType="Integer" parameterType="Long">
         select COUNT(*) from comments where post_id=#{postId}
     </select>
-    <select id="getCommentsCountByUser" parameterType="String" resultType="Integer">
+    <select id="getCommentsCountByUser" parameterType="Integer" resultType="Integer">
         select COUNT(*) from comments where user_id=#{userId}
     </select>
 </mapper>

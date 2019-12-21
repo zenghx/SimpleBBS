@@ -22,27 +22,23 @@ public class CommentController {
 
     @RequestMapping(value = "/comment",method = RequestMethod.GET,produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public Object getCommentById(@RequestBody String request){
-        try {
-            ObjectMapper mapper=new ObjectMapper();
-            JsonNode node=mapper.readTree(request);
-            String type=node.path("target_type").asText();
-            int page=node.path("page").asInt();
-            int pageSize=node.path("page_size").asInt();
+    public Object getCommentById(String targetType,String target,int page,int pageSize) {
             int start=(page-1)*pageSize;
             int end=page*pageSize;
             String commentJson;
-            if(type.equals("post")) {
+            ObjectMapper mapper=new ObjectMapper();
+            try {
+            if(targetType.equals("post")) {
                 commentJson=mapper.writeValueAsString(
-                        commentService.findCommentByPost(node.path("target").asLong(), start, end));
+                        commentService.findCommentByPost(Long.parseLong(target), start, end));
                 return "{\"status\":200,\"comments\":"+commentJson+
-                        ",\"count\":"+commentService.getCommentsCountByPost(node.path("target").asLong())+"}";
+                        ",\"count\":"+commentService.getCommentsCountByPost(Long.parseLong(target))+"}";
             }
-            if (type.equals("user")) {
+            if (targetType.equals("user")) {
                 commentJson=mapper.writeValueAsString(
-                        commentService.findCommentByUser(node.path("target").asText(), start, end));
+                        commentService.findCommentByUser(target, start, end));
                 return "{\"status\":200,\"comments\":"+commentJson+
-                        ",\"count\":"+commentService.getCommentsCountByPost(node.path("target").asLong())+"}";
+                        ",\"count\":"+commentService.getCommentsCountByUser(target)+"}";
             }
         } catch (JsonMappingException e) {
             e.printStackTrace();
