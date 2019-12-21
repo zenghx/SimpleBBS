@@ -83,5 +83,6 @@
 
         <button onclick="sub()" class="btn btn-info">注册</button>
     </div>
+</div>
 </body>
 </html>
