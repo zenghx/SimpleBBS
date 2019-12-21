@@ -27,8 +27,10 @@ public class UserServiceImpl implements UserService {          //UserServiced的
     }
 
     @Override
-    public void UpdateUserPrivilege(int user_id, boolean canpost, boolean cancomment, boolean admin) {
-        if(user_id!=0) userPrivilegeDao.UpdateUserPrivilege(user_id,canpost,cancomment,admin);
+    public Integer UpdateUserPrivilege(int user_id, boolean canpost, boolean cancomment, boolean admin) {
+        if(user_id!=0)
+            return userPrivilegeDao.UpdateUserPrivilege(user_id,canpost,cancomment,admin);
+        else return -1;
     }
 
     @Override

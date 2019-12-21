@@ -93,27 +93,27 @@ public class UserController {
         return "{\"status\":404,\"msg\":\"not found\"}";
     }
 
-    UserPrivilege current_priv;
-    @RequestMapping(value = "/admin",method = RequestMethod.GET,produces ="text/json;charset=UTF-8")
+    @RequestMapping(value = "/admin",method = RequestMethod.POST,produces ="text/json;charset=UTF-8")
     @ResponseBody
-    public void toUpdateUserPrivilege(@RequestBody UserPrivilege userpriv){
-        this.current_priv = userpriv;
-    }
-    public Object UpdateUserPrivilege(HttpSession session,Model model){
+    public Object UpdateUserPrivilege(@RequestBody UserPrivilege userpriv,HttpSession session){
         UserInfo current_user = (UserInfo) session.getAttribute("USER_SESSION");
-        UserPrivilege current_user_Privilege = userService.FindUserPrivilege(current_user.getUser_id());
+        if (current_user!=null){
+                UserPrivilege current_user_Privilege = userService.FindUserPrivilege(current_user.getUser_id());
+                if (current_user_Privilege.isAdmin() == true){
+                    if(userpriv!=null&&userpriv.getUser_id()>0) {
+                        int result=userService.UpdateUserPrivilege(userpriv.getUser_id(), userpriv.isAble_post(),
+                                userpriv.isAble_comment(), userpriv.isAdmin());
+                        if(result>0)
+                            return "{\"status\":200,\"msg\":\"Updated\"}";
+                        else return "{\"status\":404,\"msg\":\"Not Found\"}";
+                    }
+                    else return "{\"status\":400,\"msg\":\"Bad Request\"}";
+                }
+                else return "{\"status\":403,\"msg\":\"Forbidden\"}";
 
-        if (current_user_Privilege.isAdmin() == true){
-            if(this.current_priv.getUser_id()!=0) {
-                userService.UpdateUserPrivilege(this.current_priv.getUser_id(), this.current_priv.isAble_post(),
-                        this.current_priv.isAble_comment(), this.current_priv.isAdmin());
             }
-            else
-                return "{\"status\":404,\"msg\":\"not found\"}";
+        else return "{\"status\":401,\"msg\":\"Unauthorized\"}";
         }
-        else
-            model.addAttribute("msg","您没有权限执行此操作！");
-        return "/admin";
-    }
+
 }
 
