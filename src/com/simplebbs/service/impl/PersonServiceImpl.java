@@ -3,7 +3,6 @@ package com.simplebbs.service.impl;
 import com.simplebbs.po.Posts;
 import com.simplebbs.po.UserInfo;
 import com.simplebbs.po.Comments;
-import com.simplebbs.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
