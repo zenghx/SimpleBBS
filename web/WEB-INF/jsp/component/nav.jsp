@@ -9,38 +9,35 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="${pageContext.request.contextPath}">SimpleBBS</a>
+<div id="Top">
+    <div class="content">
+        <div style="padding-top: 6px;">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td width="110" align="left">
+                        <a href="${pageContext.request.contextPath}/" name="index" title="SimpleBBS">
+                            <div id="Logo">
+                                SimpleBBS
+                            </div>
+                        </a>
+                    </td>
+                    <c:if test="${sessionScope.USER_SESSION==null}">
+                        <td width="570" align="right" style="padding-top: 2px;">
+                        <a href="${pageContext.request.contextPath}/sign_up" class="top">注册</a>&nbsp;&nbsp;&nbsp;
+                        <a href="${pageContext.request.contextPath}/sign_in" class="top">登录</a>
+                    </td>
+                    </c:if>
+                    <c:if test="${sessionScope.USER_SESSION!=null}">
+                        <td width="570" align="right" style="padding-top: 2px;">
+                            <a href="${pageContext.request.contextPath}/member/${sessionScope.USER_SESSION.user_name}">个人中心</a>&nbsp;&nbsp;&nbsp;
+                            <a href="${pageContext.request.contextPath}/settings">设置</a>&nbsp;&nbsp;&nbsp;
+                            <a href="${pageContext.request.contextPath}/sign_out">退出</a>
+                        </td>
+                    </c:if>
+                </tr>
+                </tbody>
+            </table>
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <c:if test="${sessionScope.USER_SESSION==null}">
-                <li><a href="${pageContext.request.contextPath}/sign_up">注册</a></li>
-                <li><a href="${pageContext.request.contextPath}/sign_in">登录</a></li>
-                </c:if>
-                <c:if test="${sessionScope.USER_SESSION!=null}">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${sessionScope.USER_SESSION.user_name} <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="${pageContext.request.contextPath}/member/${sessionScope.USER_SESSION.user_name}">个人中心</a></li>
-                        <li><a href="${pageContext.request.contextPath}/settings">设置</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="${pageContext.request.contextPath}/sign_out">退出</a></li>
-                    </ul>
-                </li>
-                </c:if>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+    </div>
+</div>

@@ -35,5 +35,8 @@
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="crypto-js" level="application" />
     <orderEntry type="library" name="wangEditor" level="application" />
+    <orderEntry type="library" name="sign" level="application" />
+    <orderEntry type="library" name="style" level="application" />
+    <orderEntry type="library" name="stylesheet" level="application" />
   </component>
 </module>

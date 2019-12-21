@@ -70,8 +70,7 @@ public class CommentServiceImpl implements CommentService {
         if(username==null)
             return null;
         else {
-            UserInfo user=userDao.findUserByName(username);
-            return commentDao.getCommentsCountByUser(user.getUser_id());
+            return commentDao.getCommentsCountByUser(userDao.findUserByName(username).getUser_id());
         }
     }
 

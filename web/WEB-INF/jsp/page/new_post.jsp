@@ -11,9 +11,8 @@
 <head>
     <title>发表新帖子</title>
     <link rel="stylesheet" type="text/css" href="https://zcdn.yce.ink/wangEditor.min.css"/>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="https://zcdn.yce.ink/css/stylesheet.css" rel="stylesheet">
 </head>
 <body>
 <input type="text" placeholder="请输入帖子标题" id="post_title" maxlength="70" onchange="maxlength()"/><span id="ttmessage"></span>
@@ -55,17 +54,17 @@
             contentType:"application/json;charset=UTF-8",
             dataType:"json",
             success:function (data) {
-                if(data.status=="succeed"){
+                if(data.status==200){
                     alert("发帖成功");
                     window.location.href="${pageContext.request.contextPath}/post/"+data.post_id;
                 }
                 else {
-                    console.log(data.status);
+                    console.log(data);
                     alert("发帖失败，请稍后重试");
                 }
             },
             error:function () {
-                console.log("error");
+                console.log("与服务器通信时出现错误");
             }
         })
     }

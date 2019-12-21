@@ -44,6 +44,8 @@ public class PostController {
             model.addAttribute("postTime",format1.format(post.getPost_time()));
             model.addAttribute("postUser",postUser);
             model.addAttribute("avatar",postUser.getAvatar_url());
+            model.addAttribute("section_id",post.getSection_id());
+            model.addAttribute("section_name",postService.findSectionById(post.getSection_id()).getSection_name());
             return "page/post";
         }
         else return "page/404";
