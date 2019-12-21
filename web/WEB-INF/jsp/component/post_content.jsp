@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8"  %>
-<div class="box" style="border-bottom: 0px;">
+<div class="box" style="border-bottom: 0;">
     <div class="header">
         <div class="fr">
             <a href="${pageContext.request.contextPath}/member/${postUser.user_name}"><img src="${avatar}" class="avatar" border="0" align="default"></a>
