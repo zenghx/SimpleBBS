@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simplebbs.po.Posts;
 import com.simplebbs.po.Section;
 import com.simplebbs.po.UserInfo;
+import com.simplebbs.po.UserPrivilege;
 import com.simplebbs.service.PostService;
 import com.simplebbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,6 +113,34 @@ public class PostController {
         }
         return "{\"status\":404,\"msg\":\"not found\"}";
 
+    }
+
+    @RequestMapping(value = "/del_post/{post_id}",method = RequestMethod.GET,produces = "text/json;charset=UTF8")
+    @ResponseBody
+    public Object del_post(@PathVariable("post_id")int post_id){
+        if (post_id>0&&postService.readPostById(post_id)!=null){
+            postService.delPost(post_id);
+            return "{\"status\":200,\"msg\":\"succeed\"}";
+        }
+        return "{\"status\":400,\"msg\":\"failed\"}";
+    }
+
+    @RequestMapping(value = "/set_post_sta",method = RequestMethod.POST,produces = "text/json;charset=UTF8")
+    @ResponseBody
+    public Object set_post_status(@RequestBody Posts post,HttpSession session){
+        UserInfo current_user = (UserInfo) session.getAttribute("USER_SESSION");
+        if (current_user!=null){
+            UserPrivilege userPrivilege = userService.FindUserPrivilege(current_user.getUser_id());
+            if (userPrivilege.isAdmin() == true){
+                if (post.getPost_id()>0&&postService.readPostById(post.getPost_id())!=null){
+                    postService.setCommentStatus(post.getPost_id(),post.isAllow_comment());
+                    return "{\"status\":200,\"msg\":\"Updated\"}";
+            }
+                else return "{\"status\":404,\"msg\":\"Not Found\"}";
+            }
+            else return "{\"status\":403,\"msg\":\"Forbidden\"}";
+        }
+        else return "{\"status\":401,\"msg\":\"Unauthorized\"}";
     }
 
     @RequestMapping(value = "/get_section_name/{id}",method=RequestMethod.GET,produces = "text/json;charset=UTF8")
