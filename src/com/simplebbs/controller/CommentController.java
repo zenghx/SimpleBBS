@@ -5,7 +5,11 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simplebbs.po.Comments;
+import com.simplebbs.po.Report;
 import com.simplebbs.po.UserInfo;
+import com.simplebbs.po.Report;
+import com.simplebbs.service.PostService;
+import com.simplebbs.service.ReportService;
 import com.simplebbs.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,12 @@ import java.util.Date;
 @Controller
 public class CommentController {
     private CommentService commentService;
+    private PostService postService;
+    private ReportService reportService;
+    @Autowired
+    void setPostService(PostService postService){this.postService = postService;}
+    @Autowired
+    void setReportService(ReportService reportService){this.reportService = reportService;}
     @Autowired
     void setCommentService(CommentService commentService){this.commentService=commentService;}
 
@@ -59,6 +69,17 @@ public class CommentController {
         if(result>0)
             return "{\"status\":200,\"msg\":\"succeed\"}";
         else return "{\"status\":500,\"msg\":\"fail\"}";
+    }
+
+    @RequestMapping(value = "/comment_report",method = RequestMethod.POST,produces =  "text/json;charset=UTF8")
+    @ResponseBody
+    public Integer AddCommentReport(@RequestBody Report report){
+        if (postService.readPostById(report.getPost_id())!=null){
+            reportService.AddCommentReport(report.getPost_id(), report.getComment_id(),report.getReporter(),
+                    report.getReport_reason(),report.getReport_time());
+            return 1;
+        }
+        else return -1;
     }
 
 }

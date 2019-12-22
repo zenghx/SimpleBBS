@@ -8,6 +8,8 @@ import com.simplebbs.po.Posts;
 import com.simplebbs.po.Section;
 import com.simplebbs.po.UserInfo;
 import com.simplebbs.po.UserPrivilege;
+import com.simplebbs.po.Report;
+import com.simplebbs.service.ReportService;
 import com.simplebbs.service.PostService;
 import com.simplebbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import java.util.List;
 public class PostController {
     private PostService postService;
     private UserService userService;
+    private ReportService reportService;
     @Autowired
     void setPostService(PostService postService){
         this.postService=postService;
@@ -32,6 +35,8 @@ public class PostController {
     void setUserService(UserService userService){
         this.userService=userService;
     }
+    @Autowired
+    void setReportService(ReportService reportService){this.reportService = reportService;}
 
     @RequestMapping("/post/{id}")
     public String readPost(@PathVariable("id") long postID, Model model){
@@ -141,6 +146,17 @@ public class PostController {
             else return "{\"status\":403,\"msg\":\"Forbidden\"}";
         }
         else return "{\"status\":401,\"msg\":\"Unauthorized\"}";
+    }
+
+    @RequestMapping(value = "/post_report",method = RequestMethod.POST,produces =  "text/json;charset=UTF8")
+    @ResponseBody
+    public Integer AddPostReport(@RequestBody Report report){
+        if (postService.readPostById(report.getPost_id())!=null){
+            reportService.AddPostReport(report.getPost_id(), report.getReporter(),
+                    report.getReport_reason(),report.getReport_time());
+            return 1;
+        }
+        else return -1;
     }
 
     @RequestMapping(value = "/get_section_name/{id}",method=RequestMethod.GET,produces = "text/json;charset=UTF8")
