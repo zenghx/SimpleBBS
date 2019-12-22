@@ -101,8 +101,21 @@ public class UserController {
                 UserPrivilege current_user_Privilege = userService.FindUserPrivilege(current_user.getUser_id());
                 if (current_user_Privilege.isAdmin() == true){
                     if(userpriv!=null&&userpriv.getUser_id()>0) {
-                        int result=userService.UpdateUserPrivilege(userpriv.getUser_id(), userpriv.isAble_post(),
-                                userpriv.isAble_comment(), userpriv.isAdmin());
+                        UserPrivilege mudiuserpriv = userService.FindUserPrivilege(userpriv.getUser_id());
+                        boolean canpost = userpriv.isAble_post();
+                        boolean cancomment = userpriv.isAble_comment();
+                        boolean isadmin = userpriv.isAdmin();
+                        if (canpost == mudiuserpriv.isAble_post()){
+                            canpost = mudiuserpriv.isAble_post();
+                        }
+                        if (cancomment == mudiuserpriv.isAble_comment()){
+                            cancomment = mudiuserpriv.isAble_comment();
+                        }
+                        if (isadmin == mudiuserpriv.isAdmin()){
+                            isadmin = mudiuserpriv.isAdmin();
+                        }
+                        int result=userService.UpdateUserPrivilege(userpriv.getUser_id(), canpost,cancomment,
+                                isadmin);
                         if(result>0)
                             return "{\"status\":200,\"msg\":\"Updated\"}";
                         else return "{\"status\":404,\"msg\":\"Not Found\"}";
