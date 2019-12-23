@@ -108,21 +108,20 @@ public class UserController {
     public Object UpdateUserPrivilege(@RequestBody UserPrivilege userpriv,HttpSession session){
         UserInfo current_user = (UserInfo) session.getAttribute("USER_SESSION");
         if (current_user!=null){
-                UserPrivilege current_user_Privilege = userService.FindUserPrivilege(current_user.getUser_id());
+            UserPrivilege current_user_Privilege = userService.FindUserPrivilege(current_user.getUser_id());
             if (current_user_Privilege.isAdmin()) {
                 if (userpriv != null && userpriv.getUser_id() > 0) {
-                    UserPrivilege mudiuserpriv = userService.FindUserPrivilege(userpriv.getUser_id());
                     boolean canpost = userpriv.isAble_post();
                     boolean cancomment = userpriv.isAble_comment();
                     boolean isadmin = userpriv.isAdmin();
-                    if (canpost == mudiuserpriv.isAble_post()) {
-                        canpost = mudiuserpriv.isAble_post();
+                    if (!canpost) {
+                        canpost = false;
                     }
-                    if (cancomment == mudiuserpriv.isAble_comment()) {
-                        cancomment = mudiuserpriv.isAble_comment();
+                    if (!cancomment) {
+                        cancomment = false;
                     }
-                    if (isadmin == mudiuserpriv.isAdmin()) {
-                        isadmin = mudiuserpriv.isAdmin();
+                    if (!isadmin) {
+                        isadmin = false;
                     }
                     int result = userService.UpdateUserPrivilege(userpriv.getUser_id(), canpost, cancomment,
                             isadmin);
