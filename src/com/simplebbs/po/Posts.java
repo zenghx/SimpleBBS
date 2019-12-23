@@ -4,7 +4,6 @@ package com.simplebbs.po;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
-import java.util.List;
 
 public class Posts {
     private long post_id;
@@ -17,7 +16,6 @@ public class Posts {
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss a",timezone = "GMT+8")
     private Date post_time;
     private int section_id;
-    private List<Comments> commentsList;
 
     public int getSection_id() {
         return section_id;
@@ -91,11 +89,4 @@ public class Posts {
         return title;
     }
 
-    public List<Comments> getCommentsList() {
-        return commentsList;
-    }
-
-    public void setCommentsList(List<Comments> commentsList) {
-        this.commentsList = commentsList;
-    }
 }

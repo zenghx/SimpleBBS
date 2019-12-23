@@ -13,9 +13,27 @@
         select * from user_info where user_id = #{id}
     </select>
     <!--增加用户名和密码进行注册  -->
-    <insert id="addUser">
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="user_id">
          insert into user_info (user_name,pwd_hash)
-        values (#{username},#{password})
+        values (#{user_name},#{pwd_hash})
     </insert>
-
+    <!--修改用户信息-->
+    <update id="updateUserInfo">
+        update user_info
+        <set>
+            <if test="avatar!=null">
+                avatar_url=#{avatar},
+            </if>
+            <if test="birthday!=null">
+                birthday=#{birthday},
+            </if>
+            <if test="password!=null">
+                pwd_hash=#{password},
+            </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
+        </set>
+        where user_id=#{userId}
+    </update>
 </mapper>

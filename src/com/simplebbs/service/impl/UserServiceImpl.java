@@ -10,26 +10,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {          //UserServiced的接口实现类
-
     private UserDao userDao;
     private UserPrivilegeDao userPrivilegeDao;
+
     @Autowired
-    void setUserDao(UserDao userDao){
-        this.userDao=userDao;
+    void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
+
     @Autowired
-    void setUserPrivilegeDao(UserPrivilegeDao userPrivilegeDao){this.userPrivilegeDao=userPrivilegeDao;}
-    @Override
-    public void addUser(UserInfo user) {
-        userDao.addUser(user.getUser_name(),user.getPwd_hash());
+    void setUserPrivilegeDao(UserPrivilegeDao userPrivilegeDao) {
+        this.userPrivilegeDao = userPrivilegeDao;
     }
 
     @Override
+    @Transactional
+    public Integer addUser(UserInfo user) {
+        if (user != null && user.getUser_name() != null && user.getPwd_hash() != null) {
+            int result = userDao.addUser(user);
+            userPrivilegeDao.AddUserPrivilege(user.getUser_id(), true, true, false);
+            return result;
+        } else return -1;
+    }
+
+    @Override
+    @Transactional
     public Integer UpdateUserPrivilege(int user_id, boolean canpost, boolean cancomment, boolean admin) {
-        if(user_id!=0)
-            return userPrivilegeDao.UpdateUserPrivilege(user_id,canpost,cancomment,admin);
+        if (user_id > 0)
+            return userPrivilegeDao.UpdateUserPrivilege(user_id, canpost, cancomment, admin);
         else return -1;
     }
 
@@ -59,10 +68,27 @@ public class UserServiceImpl implements UserService {          //UserServiced的
     }
 
     @Override
-    public UserPrivilege FindUserPrivilege(int user_id){
-        if(user_id!=0)
+    public UserPrivilege FindUserPrivilege(int user_id) {
+        if (user_id > 0)
             return userPrivilegeDao.FindUserPrivilege(user_id);
         else return null;
+    }
+
+    @Override
+    @Transactional
+    public Integer AddUserPrivilege(int user_id, boolean canpost, boolean cancomment, boolean admin) {
+        if (user_id > 0)
+            return userPrivilegeDao.AddUserPrivilege(user_id, canpost, cancomment, admin);
+        else return -1;
+    }
+
+    @Override
+    @Transactional
+    public Integer updateUserInfo(UserInfo user) {
+        if (user == null || user.getUser_id() <= 0)
+            return -1;
+        else return userDao.updateUserInfo(user.getUser_id(), user.getGender(),
+                user.getPwd_hash(), user.getBirthday(), user.getAvatar_url());
     }
 
 }

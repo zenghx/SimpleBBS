@@ -24,17 +24,16 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public List<Comments> findCommentByPost(long postId,int start,int end) {
-        if (postId!=0){
-            return commentDao.findCommentByPost(postId,start,end);
-        }
-        else return null;
+    public List<Comments> findCommentByPost(long postId, int start, int offset) {
+        if (postId != 0) {
+            return commentDao.findCommentByPost(postId, start, offset);
+        } else return null;
     }
 
     @Override
-    public List<Comments> findCommentByUser(String username,int start,int end) {
-        if(username!=null)
-            return commentDao.findCommentByUser(username,start,end);
+    public List<Comments> findCommentByUser(String username, int start, int offset) {
+        if (username != null)
+            return commentDao.findCommentByUser(username, start, offset);
         return null;
     }
 

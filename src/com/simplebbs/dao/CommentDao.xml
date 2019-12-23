@@ -6,16 +6,22 @@
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
     <!-- 根据帖子ID查找评论 -->
     <select id="findCommentByPost" resultType="Comments">
-        select * from comments where post_id=#{post_id}
-        order by comment_id asc
-        limit #{start},#{end}
+        select *
+        from comments
+        where post_id = #{post_id}
+        order by comment_time asc
+        limit #{start},#{offset}
     </select>
 
     <!--根据用户查找评论  -->
     <select id="findCommentByUser" resultType="Comments">
-        select c.* from comments c,user_info u where c.user_id=u.user_id and u.user_name=#{username}
-        order by comment_id asc
-        limit #{start},#{end}
+        select c.*
+        from comments c,
+             user_info u
+        where c.user_id = u.user_id
+          and u.user_name = #{username}
+        order by comment_time asc
+        limit #{start},#{offset}
     </select>
     <!--添加新评论-->
     <insert id="newComment" useGeneratedKeys="true" keyProperty="comment_id">

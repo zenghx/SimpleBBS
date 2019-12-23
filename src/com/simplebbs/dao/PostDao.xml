@@ -17,7 +17,7 @@
             </if>
         </where>
         order by post_time desc
-        limit #{start},#{end}
+        limit #{start},#{offset}
     </select>
     <!-- 根据帖子id获取整个帖子，用于读帖-->
     <!--resultMap-->

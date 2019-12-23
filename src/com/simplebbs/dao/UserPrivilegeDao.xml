@@ -6,13 +6,20 @@
     <!-- 目的：为DAO接口方法提供sql语句配置 -->
     <!-- 根据用户ID查询用户的权限 -->
     <select id="FindUserPrivilege" parameterType="int" resultType="UserPrivilege">
-        select * from user_priv where user_id = #{user_id};
+        select *
+        from user_priv
+        where user_id = #{user_id};
     </select>
-
+    <insert id="AddUserPrivilege">
+        insert into user_priv(user_id, able_post, able_comment, admin)
+        VALUES (#{user_id}, #{canpost}, #{cancomment}, #{admin})
+    </insert>
     <!-- 根据用户ID修改用户权限 -->
-    <update id="UpdateUserPrivilege" parameterType="int">
-        update user_priv set able_post = #{canpost} where user_id = #{user_id};
-        update user_priv set able_comment = #{cancomment} where user_id = #{user_id};
-        update user_priv set admin = #{admin} where user_id = #{user_id}
+    <update id="UpdateUserPrivilege">
+        update user_priv
+        set able_post    = #{canpost},
+            able_comment = #{cancomment},
+            admin        = #{admin}
+        where user_id = #{user_id};
     </update>
 </mapper>

@@ -1,8 +1,6 @@
 package com.simplebbs.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simplebbs.po.Posts;
 import com.simplebbs.po.Section;
@@ -53,7 +51,7 @@ public class PostController {
 
     @RequestMapping(value = "/new_post",method = RequestMethod.GET)
     public String toNewPost(Model model){
-        List allSections=postService.allSections();
+        List<Section> allSections = postService.allSections();
         model.addAttribute("allSections",allSections);
         return "page/new_post";
     }
@@ -77,38 +75,27 @@ public class PostController {
         else return "{\"status\":404,\"msg\":\"not found\"}";
     }
 
-    @RequestMapping(value = "/glance_post",method = RequestMethod.GET,produces = "text/json;charset=UTF-8")
+    @RequestMapping(value = "/glance_post", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
     @ResponseBody
-    public Object glancePost(@RequestBody String request){
-        ObjectMapper mapper=new ObjectMapper();
-        JsonNode node= null;
-        try {
-            node = mapper.readTree(request);
-            String type=node.path("type").asText();
-            int page=node.path("page").asInt();
-            int pageSize=node.path("page_size").asInt();
-            int sectionId;
-            int userId;
-            if(type.equals("index")){
-                sectionId=0;
-                userId=0;
-            }
-            else if (type.equals("user")){
-                String username= node.path("value").asText();
-                userId=userService.findUserByName(username).getUser_id();
-                sectionId=0;
-            }
-            else if(type.equals("section")){
-                sectionId=node.path("value").asInt();
-                userId=0;
-            }
-            else return "{\"status\":404,\"msg\":\"not found\"}";
-            List<Posts> result=postService.glancePost(sectionId,userId,page,pageSize);
-            int postCount=postService.getPostCount(sectionId,userId);
-            if(result!=null&&postCount!=0)
-                return "{\"status\":200,\"posts\":"+mapper.writeValueAsString(result)+",\"count\":"+postCount+"}";
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+    public Object glancePost(String type, String value, int page, int pageSize) throws JsonProcessingException {
+        int sectionId;
+        int userId;
+        int postCount;
+        ObjectMapper mapper = new ObjectMapper();
+        if (type.equals("index")) {
+            sectionId = 0;
+            userId = 0;
+        } else if (type.equals("user")) {
+            userId = userService.findUserByName(value).getUser_id();
+            sectionId = 0;
+        } else if (type.equals("section")) {
+            sectionId = Integer.parseInt(value);
+            userId = 0;
+        } else return "{\"status\":404,\"msg\":\"not found\"}";
+        List<Posts> result = postService.glancePost(sectionId, userId, page, pageSize);
+        if (result != null) {
+            postCount = result.size();
+            return "{\"status\":200,\"posts\":" + mapper.writeValueAsString(result) + ",\"count\":" + postCount + "}";
         }
         return "{\"status\":404,\"msg\":\"not found\"}";
 
@@ -126,11 +113,32 @@ public class PostController {
     }
 
     @RequestMapping("/section/{id}")
-    public String showSection(@PathVariable("id")int sectionId,HttpSession session,Model model){
-        Section section=postService.findSectionById(sectionId);
-        UserInfo user=(UserInfo) session.getAttribute("USER_SESSION");
-        boolean isSignedIn=(user!=null);
-        model.addAttribute("SectionName",section.getSection_name());
+    public String showSection(@PathVariable("id") int sectionId, HttpSession session, Model model) {
+        Section section = postService.findSectionById(sectionId);
+        UserInfo user = (UserInfo) session.getAttribute("USER_SESSION");
+        boolean isSignedIn = (user != null);
+        model.addAttribute("SectionName", section.getSection_name());
         return "page/section";
+    }
+
+    @RequestMapping(value = "/post_count", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getPostCount(String type, String value) {
+        int sectionId;
+        int userId;
+        if (type.equals("index")) {
+            sectionId = 0;
+            userId = 0;
+        } else if (type.equals("section")) {
+            userId = 0;
+            sectionId = Integer.parseInt(value);
+        } else if (type.equals("user")) {
+            sectionId = 0;
+            UserInfo user = userService.findUserByName(value);
+            if (user != null)
+                userId = user.getUser_id();
+            else return "{\"status\":404,\"msg\":\"Not Found\"}";
+        } else return "{\"status\":400,\"msg\":\"Bad Request\"}";
+        return "{\"status\":200,\"count\":" + postService.getPostCount(sectionId, userId) + "}";
     }
 }

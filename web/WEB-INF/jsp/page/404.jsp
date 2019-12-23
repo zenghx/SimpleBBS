@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>404: Not Found</title>
+    <link rel="icon" href="https://s.zenghx.tk/favicon.ico" type="image/x-icon"/>
 </head>
 <body>
 404: Not Found

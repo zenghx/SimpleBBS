@@ -20,9 +20,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Posts> glancePost(int sectionId,long userId, int page, int pageSize) {
-        if(userId<0||sectionId<0||page<1||pageSize<=0)
+        if (userId < 0 || sectionId < 0 || page < 1 || pageSize <= 0)
             return null;
-        else return postDao.glancePost(sectionId,userId,(page-1)*pageSize,page*pageSize);
+        else return postDao.glancePost(sectionId, userId, (page - 1) * pageSize, pageSize);
     }
 
     @Override

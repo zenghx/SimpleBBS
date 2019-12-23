@@ -11,17 +11,17 @@ import javax.servlet.http.HttpSession;
 public class SignInInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        String uri=httpServletRequest.getRequestURI();
-        /*if(uri.contains("/new_post") || uri.contains("/new_comment") ||uri.contains("/settings")) {
-            HttpSession session=httpServletRequest.getSession();
-            UserInfo user=(UserInfo)session.getAttribute("USER_SESSION");
-            if(user==null) {
-                httpServletRequest.setAttribute("msg","请先登录！");
-                httpServletRequest.getRequestDispatcher("/WEB-INF/jsp/sign_in.jsp")
-                        .forward(httpServletRequest,httpServletResponse);
+        String uri = httpServletRequest.getRequestURI();
+        if (uri.contains("/new_post") || uri.contains("/new_comment") || uri.contains("/settings")) {
+            HttpSession session = httpServletRequest.getSession();
+            UserInfo user = (UserInfo) session.getAttribute("USER_SESSION");
+            if (user == null) {
+                httpServletRequest.setAttribute("msg", "请先登录！");
+                httpServletRequest.getRequestDispatcher("/WEB-INF/jsp/page/sign_in.jsp")
+                        .forward(httpServletRequest, httpServletResponse);
                 return false;
             }
-        }*/
+        }
         return true;
     }
 

@@ -9,32 +9,31 @@
 <html>
 <head>
     <title>注册</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="https://s.zenghx.tk/favicon.ico" type="image/x-icon"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link href="https://zcdn.yce.ink/css/sign.css" rel="stylesheet">
     <link href="https://zcdn.yce.ink/css/stylesheet.css" rel="stylesheet">
     <script>
-        function sub(){
-            let usrname=document.getElementById("uname");
-            let pwd=document.getElementById("upass");
+        function sub() {
+            let usrname = document.getElementById("uname");
+            let pwd = document.getElementById("upass");
             let oError = document.getElementById("error_box");
-            if(pwd.value==""||usrname.value==""){
-                oError.innerText="用户名或密码不能为空";
+            if (pwd.value == "" || usrname.value == "") {
+                oError.innerText = "用户名或密码不能为空";
                 return;
             }
             if (usrname.value.length > 20 || usrname.value.length < 5) {
                 oError.innerHTML = "用户名请输入5-20位字符";
                 return;
-            }else if((usrname.value.charCodeAt(0)>=48) && (usrname.value.charCodeAt(0)<=57)){
+            } else if ((usrname.value.charCodeAt(0) >= 48) && (usrname.value.charCodeAt(0) <= 57)) {
                 oError.innerHTML = "首字符必须为字母";
                 return;
-            }else for(var i=0;i<usrname.value.charCodeAt(i);i++){
-                if((usrname.value.charCodeAt(i)<48)||(usrname.value.charCodeAt(i)>57) && (usrname.value.charCodeAt(i)<97)||(usrname.value.charCodeAt(i)>122)){
-                    oError.innerHTML = "必须为字母跟数字组成";
+            } else for (var i = 0; i < usrname.value.charCodeAt(i); i++) {
+                if ((usrname.value.charCodeAt(i) < 48) || (usrname.value.charCodeAt(i) > 57) && (usrname.value.charCodeAt(i) < 97) || (usrname.value.charCodeAt(i) > 122)) {
+                    oError.innerHTML = "用户名必须为字母跟数字组成";
                     return;
                 }
             }
@@ -42,10 +41,10 @@
                 oError.innerHTML = "密码请输入6-20位字符";
                 return;
             }
-            let message=pwd.value+usrname.value;
-            let hash=CryptoJS.HmacSHA256(message,"digest");
+            let message = pwd.value + usrname.value;
+            let hash = CryptoJS.HmacSHA256(message, "digest");
             $.ajax({
-                url:"${pageContext.request.contextPath}/sign_up",
+                url: "${pageContext.request.contextPath}/sign_up",
                 type:"post",
                 data:JSON.stringify({user_name:usrname.value,pwd_hash:CryptoJS.enc.Base64.stringify(hash)}),
                 contentType:"application/json;charset=UTF-8",
@@ -67,22 +66,31 @@
 </head>
 <body>
 <jsp:include page="../component/nav.jsp"></jsp:include>
-<div id="container">
-    <div id="header" style="background-color: #f7f7f7">
-        <h2 align="center">注册</h2>
+<div id="Wrapper">
+    <div class="content">
+        <div id="Main">
+            <div class="sep20"></div>
+            <div class="box">
+                <div class="header">注册</div>
+                <div class="cell" margin="auto">
+                    <p>账号:
+                        <input id="uname" class="sl" type="text" name="username" placeholder="账号首字符为字母">
+                    </p>
+                    <p>密码:
+                        <input id="upass" class="sl" type="password" name="password" placeholder="请输入密码">
+                    </p>
+                    <div id="error_box" style="color: red"><br></div>
+                    <br>
+                    <button onclick="sub()" class="super normal button">注册</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="content">
-        <p align="center">账号:
-            <input id="uname" type="text" name="username" placeholder="账号首字符为字母">
-        </p>
-        <p align="center">密码:
-            <input id="upass" type="password" name="password" placeholder="请输入密码">
-        </p>
-        <div id="error_box" style="color: red"><br></div>
-        <br>
-
-        <button onclick="sub()" class="btn btn-info">注册</button>
-    </div>
+    <div class="c"></div>
+    <div class="sep20"></div>
 </div>
+</div>
+<jsp:include page="../component/footer.jsp"></jsp:include>
+
 </body>
 </html>
