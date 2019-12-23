@@ -57,7 +57,6 @@
     load_page();
     activate_page_button($("#next"));
     load_comments();
-
     function submit_comment() {
         let post_id = window.location.href.split('/').pop();
         post_id = post_id.split("?");

@@ -87,12 +87,12 @@ public class UserController {
                 String bd;
                 if (user.getBirthday() != null)
                     bd = sdf.format(user.getBirthday());
-                else bd = "\"未设置\"";
+                else bd = "未设置";
                 return "{" +
                         "\"status\":200," +
                         "\"user_name\":\"" + user.getUser_name() + "\"," +
                         "\"avatar_url\":\"" + user.getAvatar_url() + "\"," +
-                        "\"birthday\":" + bd + "," +
+                        "\"birthday\":\"" + bd + "\"," +
                         "\"gender\":" + user.getGender() + "," +
                         "\"is_able_comment\":" + user_pri.isAble_comment() + "," +
                         "\"is_able_post\":" + user_pri.isAble_post() + "," +

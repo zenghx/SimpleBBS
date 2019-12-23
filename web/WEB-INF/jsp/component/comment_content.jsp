@@ -16,6 +16,7 @@
     let page = 1;
     let page_size = 5;
     let total_pages;
+    let target = "comment";
 
     function load_comments() {
         let param = window.location.href.split('/').pop();
@@ -66,6 +67,8 @@
                                 if (i == count - 1)
                                     $("#loading").remove();
                             } else console.log("get user " + user_id + " info failed.");
+                        }).catch(function (data) {
+                            console.log(data.statusText);
                         })
                     });
 
@@ -76,7 +79,6 @@
             }
         })
     }
-
     function load_page() {
         let param = window.location.href.split('/').pop();
         let reg = new RegExp("^[0-9]*$");

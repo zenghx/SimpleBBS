@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -45,28 +46,25 @@ public class CommentController {
     @ResponseBody
     public Object getCommentById(String targetType, String target, int page, int pageSize) {
         int start = (page - 1) * pageSize;
-        int end = page * pageSize;
+        int offset = pageSize;
         String commentJson;
         ObjectMapper mapper = new ObjectMapper();
+        List<Comments> commentsList;
         try {
             if (targetType.equals("post")) {
-                commentJson = mapper.writeValueAsString(
-                        commentService.findCommentByPost(Long.parseLong(target), start, end));
-                return "{\"status\":200,\"comments\":"+commentJson+
-                        ",\"count\":"+commentService.getCommentsCountByPost(Long.parseLong(target))+"}";
-            }
-            if (targetType.equals("user")) {
-                commentJson=mapper.writeValueAsString(
-                        commentService.findCommentByUser(target, start, end));
-                return "{\"status\":200,\"comments\":"+commentJson+
-                        ",\"count\":"+commentService.getCommentsCountByUser(target)+"}";
-            }
+                commentsList = commentService.findCommentByPost(Long.parseLong(target), start, offset);
+            } else if (targetType.equals("user")) {
+                commentsList = commentService.findCommentByUser(target, start, offset);
+            } else return "{\"status\":404,\"msg\":\"not found\"}";
+            commentJson = mapper.writeValueAsString(commentsList);
+            return "{\"status\":200,\"comments\":" + commentJson +
+                    ",\"count\":" + commentsList.size() + "}";
         } catch (JsonMappingException e) {
             e.printStackTrace();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return "{\"status\":404,\"msg\":\"not found\"}";
+        return "{\"status\":500,\"msg\":\"服务器错误\"}";
     }
 
     @RequestMapping(value = "/new_comment",method = RequestMethod.POST)

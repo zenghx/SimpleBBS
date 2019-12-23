@@ -43,6 +43,7 @@
   let page = 1;
   let page_size = 5;
   let total_pages;
+  let target = "comment";
   load_post_page();
   load_posts();
   activate_page_button($("#next"));

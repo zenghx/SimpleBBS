@@ -113,9 +113,13 @@
                             $("#count").after(post_html);
                             if (i == count - 1)
                                 $("#loading").remove();
-                        })
+                        }).catch(function (data) {
+                        console.log(data.statusText);
+                    })
                 });
             } else console.log(data);
+        }).catch(function (data) {
+            console.log(data.statusText)
         })
     }
 
@@ -142,7 +146,7 @@
         target.addClass("disable_now");
     }
 
-    function next_post_page() {
+    function next_page() {
         if (page == total_pages) return;
         let previous = $("#previous");
         let next = $("#next");
@@ -153,11 +157,16 @@
             deactivate_page_button(next);
         }
         page = page + 1;
-        load_posts();
-        load_post_page();
+        if (target == "post") {
+            load_posts();
+            load_post_page();
+        } else if (target == "comment") {
+            load_comments();
+            load_page();
+        }
     }
 
-    function previous_post_page() {
+    function previous_page() {
         let previous = $("#previous");
         let next = $("#next");
         if (page == 1) return;
@@ -168,7 +177,12 @@
             deactivate_page_button(previous);
         }
         page = page - 1;
-        load_posts();
-        load_post_page();
+        if (target == "post") {
+            load_posts();
+            load_post_page();
+        } else if (target == "comment") {
+            load_comments();
+            load_page();
+        }
     }
 </script>
