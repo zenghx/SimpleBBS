@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simplebbs.po.Posts;
 import com.simplebbs.po.Section;
 import com.simplebbs.po.UserInfo;
+import com.simplebbs.po.UserPrivilege;
+import com.simplebbs.po.Report;
+import com.simplebbs.service.ReportService;
 import com.simplebbs.service.PostService;
 import com.simplebbs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ import java.util.List;
 public class PostController {
     private PostService postService;
     private UserService userService;
+    private ReportService reportService;
     @Autowired
     void setPostService(PostService postService){
         this.postService=postService;
@@ -29,6 +33,8 @@ public class PostController {
     void setUserService(UserService userService){
         this.userService=userService;
     }
+    @Autowired
+    void setReportService(ReportService reportService){this.reportService = reportService;}
 
     @RequestMapping("/post/{id}")
     public String readPost(@PathVariable("id") long postID, Model model){
@@ -99,6 +105,45 @@ public class PostController {
         }
         return "{\"status\":404,\"msg\":\"not found\"}";
 
+    }
+
+    @RequestMapping(value = "/del_post/{post_id}",method = RequestMethod.GET,produces = "text/json;charset=UTF8")
+    @ResponseBody
+    public Object del_post(@PathVariable("post_id")int post_id){
+        if (post_id>0&&postService.readPostById(post_id)!=null){
+            postService.delPost(post_id);
+            return "{\"status\":200,\"msg\":\"succeed\"}";
+        }
+        return "{\"status\":400,\"msg\":\"failed\"}";
+    }
+
+    @RequestMapping(value = "/set_post_sta",method = RequestMethod.POST,produces = "text/json;charset=UTF8")
+    @ResponseBody
+    public Object set_post_status(@RequestBody Posts post,HttpSession session){
+        UserInfo current_user = (UserInfo) session.getAttribute("USER_SESSION");
+        if (current_user!=null){
+            UserPrivilege userPrivilege = userService.FindUserPrivilege(current_user.getUser_id());
+            if (userPrivilege.isAdmin() == true){
+                if (post.getPost_id()>0&&postService.readPostById(post.getPost_id())!=null){
+                    postService.setCommentStatus(post.getPost_id(),post.isAllow_comment());
+                    return "{\"status\":200,\"msg\":\"Updated\"}";
+            }
+                else return "{\"status\":404,\"msg\":\"Not Found\"}";
+            }
+            else return "{\"status\":403,\"msg\":\"Forbidden\"}";
+        }
+        else return "{\"status\":401,\"msg\":\"Unauthorized\"}";
+    }
+
+    @RequestMapping(value = "/post_report",method = RequestMethod.POST,produces =  "text/json;charset=UTF8")
+    @ResponseBody
+    public Integer AddPostReport(@RequestBody Report report){
+        if (postService.readPostById(report.getPost_id())!=null){
+            reportService.AddPostReport(report.getPost_id(), report.getReporter(),
+                    report.getReport_reason(),report.getReport_time());
+            return 1;
+        }
+        else return -1;
     }
 
     @RequestMapping(value = "/get_section_name/{id}",method=RequestMethod.GET,produces = "text/json;charset=UTF8")
