@@ -99,6 +99,7 @@
                     } else {
                         count_template = '<div class="cell" id="count"> <span class="gray" >' + data.count + '条回复</span></div><img id="loading" src="https://zcdn.yce.ink/img/loading.gif"/>';
                     }
+                    $("#comments").html(count_template);
                     total_pages = Math.ceil(data.count / page_size);
                     let flag = total_pages < 1 ? 1 : total_pages;
                     if (flag == 1) {
@@ -106,7 +107,6 @@
                         return;
                     }
                     $("#page_count").text(page + "/" + total_pages);
-                    $("#comments").html(count_template);
                 }
             },
             error: function (data) {

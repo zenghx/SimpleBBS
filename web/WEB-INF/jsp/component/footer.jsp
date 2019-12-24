@@ -45,6 +45,7 @@
                     } else {
                         count_template = '<div class="cell" id="count"> <span class="gray" >共' + data.count + '篇帖子</span></div><img id="loading" src="https://zcdn.yce.ink/img/loading.gif"/>';
                     }
+                    $("#post_content").html(count_template);
                     total_pages = Math.ceil(data.count / page_size);
                     let flag = total_pages < 1 ? 1 : total_pages;
                     if (flag == 1) {
@@ -53,7 +54,6 @@
                     }
                     $("#page_count").text(page + "/" + total_pages);
                     console.log(data.count);
-                    $("#post_content").html(count_template);
                 }
             },
             error: function (data) {
