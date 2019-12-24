@@ -38,6 +38,5 @@
     <orderEntry type="library" name="sign" level="application" />
     <orderEntry type="library" name="style" level="application" />
     <orderEntry type="library" name="stylesheet" level="application" />
-    <orderEntry type="library" name="qiniu" level="application" />
   </component>
 </module>
