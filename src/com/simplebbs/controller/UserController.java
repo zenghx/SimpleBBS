@@ -37,7 +37,7 @@ public class UserController {
             session.setAttribute("USER_SESSION", foundUser);
             if (signReferer == null)
                 signReferer = request.getHeader("Referer");
-            if (signReferer != null)
+            if (signReferer != null && !signReferer.contains("sign_up"))
                 return "redirect:" + signReferer;
             else return "redirect:/";
         }
