@@ -179,7 +179,7 @@ public class UserController {
                 session.setAttribute("USER_SESSION", updatedUser);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String birthday = null;
-                if (user.getBirthday() != null)
+                if (updatedUser.getBirthday() != null)
                     birthday = sdf.format(updatedUser.getBirthday());
                 model.addAttribute("user", updatedUser);
                 model.addAttribute("birthday", birthday);

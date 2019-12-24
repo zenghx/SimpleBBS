@@ -14,5 +14,6 @@
 <script>
     const E = window.wangEditor;
     const editor = new E('#div1');
+    editor.customConfig.uploadImgShowBase64 = true;
     editor.create()
 </script>
