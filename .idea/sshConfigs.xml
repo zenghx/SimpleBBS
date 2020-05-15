@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="u.zenghx.tk" id="a68c92e3-1076-4021-a5f2-470422e8116a" port="22022" customName="u.zenghx.tk" nameFormat="CUSTOM" username="root" />
+      <sshConfig authType="PASSWORD" host="u.zenghx.tk" id="7d4b5f9e-7660-4e76-85b5-1bbbae629803" port="22022" customName="u.zenghx.tk" nameFormat="CUSTOM" username="root" />
+    </configs>
+  </component>
+</project>

@@ -63,7 +63,8 @@
                     <div class="cell_tabs">
                         <div class="fl"><img src="${user.avatar_url}?imageView2/1/w/48/h/48" width="24"
                                              style="border-radius: 24px; margin-top: -2px;" border="0"></div>
-                        <a href="/member/${user.user_name}" class="cell_tab_current">${user.user_name} 创建的所有主题</a></div>
+                        <a href="${pageContext.request.contextPath}/member/${user.user_name}"
+                           class="cell_tab_current">${user.user_name} 创建的所有主题</a></div>
                     <div id="post_content">
 
                     </div>
